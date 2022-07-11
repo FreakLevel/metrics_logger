@@ -19,6 +19,11 @@ SimpleCov.start('rails') do
   add_filter '/app/controllers/home_controller.rb'
 end
 
+if ENV['CI']
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
+
 Dir[Rails.root.join('spec/helpers/**/*.rb')].each { |f| require f }
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
