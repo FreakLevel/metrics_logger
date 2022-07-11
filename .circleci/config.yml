@@ -74,5 +74,4 @@ workflows:
           requires:
           - build
           post-steps:
-            - codecov/upload:
-                file: rspec.txt
+            - codecov/upload
