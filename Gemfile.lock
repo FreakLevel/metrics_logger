@@ -70,6 +70,8 @@ GEM
     bootsnap (1.12.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    codecov (0.6.0)
+      simplecov (>= 0.15, < 0.22)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     debug (1.5.0)
@@ -236,6 +238,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  codecov
   debug
   factory_bot_rails
   faker
