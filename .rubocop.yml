@@ -5,6 +5,7 @@ inherit_from:
 require:
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-faker
 
 AllCops:
   NewCops: enable
@@ -19,6 +20,7 @@ AllCops:
     - '**/spec_helper.rb'
     - 'node_modules/**/*'
     - 'bin/*'
+    - 'db/schema.rb'
 
 ###########################################################
 ###################### Rubocop ############################
@@ -128,6 +130,8 @@ Lint/FloatComparison:
 
 Lint/MissingSuper:
   Enabled: true
+  Exclude:
+    - 'app/services/**/*'
 
 Lint/MixedRegexpCaptureTypes:
   Enabled: true
@@ -264,7 +268,7 @@ Style/KeywordParametersOrder:
   Enabled: true
 
 Style/MethodCallWithArgsParentheses:
-  Enabled: true
+  Enabled: false
 
 Style/MissingElse:
   Enabled: true
