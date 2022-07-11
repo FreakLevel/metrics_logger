@@ -70,8 +70,6 @@ GEM
     bootsnap (1.12.0)
       msgpack (~> 1.2)
     builder (3.2.4)
-    codecov (0.6.0)
-      simplecov (>= 0.15, < 0.22)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     debug (1.5.0)
@@ -213,6 +211,9 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
+    simplecov-cobertura (2.1.0)
+      rexml
+      simplecov (~> 0.19)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
     strscan (3.0.3)
@@ -238,7 +239,6 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
-  codecov
   debug
   factory_bot_rails
   faker
@@ -251,6 +251,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   simplecov
+  simplecov-cobertura
   tzinfo-data
   vite_rails (~> 3.0.10)
 

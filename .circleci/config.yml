@@ -4,7 +4,6 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.8
-  codecov: codecov/codecov@3.1.1
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
@@ -56,8 +55,17 @@ jobs:
           command: 'bundle exec rails db:schema:load --trace'
           name: Database setup
       - run:
-          command: 'bundle exec rspec spec --format documentation'
+          command: 'bundle exec rspec spec'
           name: Run tests
+      - run:
+          command: 'curl -Os https://uploader.codecov.io/latest/linux/codecov'
+          name: Download Codecov
+      - run:
+          command: 'chmod +x ./codecov'
+          name: Make Codecov executable
+      - run:
+          command: './codecov -f coverage/coverage.xml -t ${CODECOV_TOKEN}'
+          name: Upload to Codecov
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
 
@@ -73,5 +81,3 @@ workflows:
       - rspec:
           requires:
           - build
-          post-steps:
-            - codecov/upload
