@@ -1,0 +1,78 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.8
+  codecov: codecov/codecov@3.1.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  build:
+    docker:
+      - image: cimg/ruby:3.1-node
+    steps:
+      - checkout
+      - ruby/install-deps
+  rubocop:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: 'cimg/ruby:3.1-node'
+    steps:
+      - checkout
+      - ruby/install-deps
+      - ruby/rubocop-check:
+          format: progress
+          label: Running Rubocop
+
+  rspec:
+    docker:
+      - image: 'cimg/ruby:3.1-node'
+      - environment:
+          POSTGRES_DB: metric_logger_test
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        image: 'cimg/postgres:14.2'
+    environment:
+      BUNDLE_JOBS: '3'
+      BUNDLE_RETRY: '3'
+      DB_HOST: 127.0.0.1
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      RAILS_ENV: test
+    parallelism: 3
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          command: 'dockerize -wait tcp://localhost:5432 -timeout 1m'
+          name: Wait for DB
+      - run:
+          command: 'bundle exec rails db:create'
+          name: Create DB test
+      - run:
+          command: 'bundle exec rails db:schema:load --trace'
+          name: Database setup
+      - run:
+          command: 'bundle exec rspec spec --format documentation'
+          name: Run tests
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  pr-workflow:
+    jobs:
+      - build
+      - rubocop:
+          requires:
+          - build
+      - rspec:
+          requires:
+          - build
+          post-steps:
+            - codecov/upload:
+                file: rspec.txt
