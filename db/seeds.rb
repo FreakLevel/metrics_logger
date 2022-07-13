@@ -9,16 +9,9 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 ## Create Metrics
-
-count = 1
-((Time.zone.today - 1.month)...Time.zone.today).each do |date|
-  [
-    '09:29:30', '09:29:59', '09:30:00', '09:30:01', '09:30:30', '09:30:59', '09:31:00', '09:31:01', '09:59', '10:00', '10:01', '10:30', '10:59',
-    '11:00', '11:01'
-  ].each do |time|
-    hour, min, sec = time.split(':').map { |v| Integer(v || '0', 10) }
-    timestamp = date.to_datetime.change(hour: hour || 0, min: min || 0, sec: sec || 0)
+((Time.zone.today - 3.days)...Time.zone.today).each do |date|
+  80_000.times.each do
+    timestamp = (date + rand(0..23).hours + rand(0..59).minutes + rand(0..59).seconds).to_datetime
     Metric.create!(name: "Metrics ##{count}", value: rand(1..1000), timestamp:)
-    count += 1
   end
 end
