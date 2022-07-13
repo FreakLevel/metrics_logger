@@ -1,7 +1,6 @@
-FROM --platform=$BUILDPLATFORM ruby:3.1.2
-ENV RAILS_ENV=development
-ENV npm_config_target_arch=$BUILDOS
-ENV npm_config_target_platform=$BUILDARCH
+FROM ruby:3.1.2
+ENV RAILS_ENV=production
+ENV NODE_ENV=production
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
