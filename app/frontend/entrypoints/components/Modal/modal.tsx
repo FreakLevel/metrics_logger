@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Datetime from 'react-datetime';
-import "react-datetime/css/react-datetime.css";
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { TextField } from '@mui/material';
 import { format } from "@utils/datetime";
 
 const Modal = ({
@@ -38,6 +39,11 @@ const Modal = ({
     });
   }
 
+  const renderTextFieldDateInput = (inputProps) => {
+    return(
+    <TextField {...inputProps} helperText={null} />
+  )}
+
   return (
     <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="fixed top-30 left-1/2 z-50 w-full overflow-x-hidden overflow-y-auto h-modal md:h-full transform -translate-x-14rem">
       <div className="relative w-full h-full max-w-md p-4 md:h-auto">
@@ -53,12 +59,13 @@ const Modal = ({
                 <input value={name} onChange={(e) => changeValue(e.target.value, 'name')} type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Metric #" required />
               </div>
               <div>
-                <label htmlFor="value" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Value</label>
                 <input value={value} min={1} onBlur={e => changeValue(e.target.value, 'value')} onChange={(e) => changeValue(e.target.value, 'value')} type="number" name="value" id="value" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
               </div>
               <div>
                 <label htmlFor="datetime" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Datetime (UTC)</label>
-                <Datetime value={date} onChange={(datetime) => changeValue(datetime, 'date')} dateFormat={'YYYY-MM-DD'} timeFormat={'HH:mm:ss'} inputProps={{ className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" }} />
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <DateTimePicker value={date} ampm={false} renderInput={inputProps => renderTextFieldDateInput(inputProps)} onChange={(value) => changeValue(value, 'date')} />
+                </LocalizationProvider>
               </div>
               <button onClick={createMetric} type="button" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add metric</button>
             </section>
