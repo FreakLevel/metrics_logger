@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class MetricTable
-  attr_reader :legend, :labels, :data
   attr_accessor :period
 
   PERIODS = %w[minute hour day].freeze
+
   private_constant :PERIODS
 
   def initialize(period)
@@ -13,12 +13,10 @@ class MetricTable
   end
 
   def info
-    set_values
-    {
-      legend:,
-      labels:,
-      data:
-    }
+    metric_table = Metric.average(per: period)
+    metric_table.map do |metric_data|
+      { x: metric_data.timestamp.strftime('%Y-%m-%dT%H:%M:%S'), y: metric_data.value }
+    end
   end
 
   private
@@ -29,23 +27,9 @@ class MetricTable
   end
 
   def set_values
-    info = Metric.average(per: period)
-    @legend = "Average value of metrics per #{period} (UTC Time)"
-    get_labels(info)
-    @data = info.pluck(:value)
-  end
-
-  def get_labels(info)
-    last_date = nil
-    @labels = info.pluck(:timestamp).map do |timestamp|
-      next timestamp.strftime('%Y-%m-%d') if period.eql? 'day'
-
-      label = timestamp.strftime('%H:%M')
-      if last_date.nil? || last_date.to_date != timestamp.to_date
-        label = "#{timestamp.strftime('%Y-%m-%d')}  #{label}"
-        last_date = timestamp
-      end
-      label
+    metric_table = Metric.average(per: period)
+    metric_table.each do |metric_data|
+      @data << { x: metric_data.timestamp.strftime('%Y-%m-%dT%H:%M:%S'), y: metric_data.value }
     end
   end
 end
