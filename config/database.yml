@@ -86,6 +86,4 @@ test:
 #
 production:
   <<: *default
-  database: metrics_logger_production
-  username: metrics_logger
-  password: <%= ENV["METRICS_LOGGER_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
