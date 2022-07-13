@@ -4,13 +4,13 @@ setup:
       as: DATABASE
 build:
   docker:
-    backend: Dockerfile
+    web: Dockerfile
   config:
     RAILS_ENV: production
     NODE_ENV: production
+release:
+  image: web
+  command:
+    - - tsc && bin/vite build
 run:
-  backend: ./bin/bundle exec puma -C config/puma.rb
-  frontend:
-    command:
-      - tsc && bin/vite build
-    image: backend
+  web: ./bin/bundle exec puma -C config/puma.rb
