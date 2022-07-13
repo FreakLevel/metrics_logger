@@ -9,9 +9,11 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 ## Create Metrics
-((Time.zone.today - 3.days)...Time.zone.today).each do |date|
-  80_000.times.each do
+count = 0
+((Time.zone.today - 2.days)...Time.zone.today).each do |date|
+  4_000.times.each do
     timestamp = (date + rand(0..23).hours + rand(0..59).minutes + rand(0..59).seconds).to_datetime
-    Metric.create!(name: "Metrics ##{count}", value: rand(1..1000), timestamp:)
+    Metric.create!(name: "Metrics ##{count}", value: rand(1..100), timestamp:)
+    count += 1
   end
 end
