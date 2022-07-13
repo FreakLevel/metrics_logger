@@ -1,24 +1,33 @@
-# README
+# Metrics Logger [![CodeFactor](https://www.codefactor.io/repository/github/freaklevel/metrics_logger/badge)](https://www.codefactor.io/repository/github/freaklevel/metrics_logger)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Dependencies
+|Tool|Version|
+|---|---|
+|Ruby|3.1.2|
+|Rails|7.0.3|
+|Node|16.3.0|
 
-Things you may want to cover:
+## How to run it
 
-* Ruby version
+Create an `application.yml` file into `config` folder to add env variables:
+```
+DB_HOST:
+DB_USERNAME:
+DB_PASSWORD:
+```
+Create the database with rails command and run the little seed (if you want) to have data.
 
-* System dependencies
+Run the backend and frontend in different terminals:
+```
+rails s
+```
+```
+./bin/vite dev
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Improvements
+- Cache for requests
+- Auto-reload if a new metric is added to every client connected
+- Improve UI/UX
+- Add linter and test to frontend
+- Improve docker-compose
