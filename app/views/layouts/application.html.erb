@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    
-    <%= stylesheet_link_tag 'application', media: 'all' %>
+
     <%= vite_client_tag %>
     <%= vite_typescript_tag 'application.tsx' %>
 
   </head>
 
-  <body>
+  <body style="min-height: 100vh">
     <%= yield %>
   </body>
 </html>
