@@ -8,10 +8,6 @@ build:
   config:
     RAILS_ENV: production
     NODE_ENV: production
-release:
-  image: backend
-  command:
-    - ./bin/rails db:create && ./bin/rails db:migrate
 run:
   backend: ./bin/bundle exec puma -C config/puma.rb
   frontend:
