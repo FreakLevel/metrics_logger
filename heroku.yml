@@ -11,6 +11,6 @@ build:
 release:
   image: web
   command:
-    - - tsc && bin/vite build
+    - tsc && bin/vite build
 run:
   web: ./bin/bundle exec puma -C config/puma.rb
