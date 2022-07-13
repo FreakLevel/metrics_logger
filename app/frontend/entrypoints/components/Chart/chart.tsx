@@ -56,13 +56,13 @@ const Chart = ({
     if (dataset.length == 0) return
 
     updateOptions();
-    let datasets = [Object.assign({ data: dataset }, defaultDatasetOptions)];
+    const datasets = [Object.assign({ data: dataset }, defaultDatasetOptions)];
     const finalData = { datasets: datasets };
     setData(finalData);
   }, [dataset])
 
   const updateOptions = () => {
-    let optionMod = Object.assign({}, defaultOptions);
+    const optionMod = Object.assign({}, defaultOptions);
     optionMod.scales.x.time.unit = period;
     optionMod.scales.x.min = dataset[0].x;
     optionMod.scales.x.max = dataset.slice(-1)[0].x;
