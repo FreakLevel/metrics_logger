@@ -57,15 +57,6 @@ jobs:
       - run:
           command: 'bundle exec rspec spec'
           name: Run tests
-      - run:
-          command: 'curl -Os https://uploader.codecov.io/latest/linux/codecov'
-          name: Download Codecov
-      - run:
-          command: 'chmod +x ./codecov'
-          name: Make Codecov executable
-      - run:
-          command: './codecov -f coverage/coverage.xml -t ${CODECOV_TOKEN}'
-          name: Upload to Codecov
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
 
