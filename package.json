@@ -13,7 +13,7 @@
   },
   "scripts": {
     "dev": "bin/vite dev",
-    "build": "tsc && bin/vite build"
+    "build": "bin/vite build"
   },
   "dependencies": {
     "chart.js": "^3.8.0",
