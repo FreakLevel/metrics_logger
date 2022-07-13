@@ -8,9 +8,5 @@ build:
   config:
     RAILS_ENV: production
     NODE_ENV: production
-release:
-  image: web
-  command:
-    - bin/vite build
 run:
   web: ./bin/bundle exec puma -C config/puma.rb
