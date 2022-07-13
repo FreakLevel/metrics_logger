@@ -1,7 +1,5 @@
-FROM --platform=$BUILDPLATFORM ruby:3.1.2
-ENV RAILS_ENV=development
-ENV npm_config_target_arch=$BUILDOS
-ENV npm_config_target_platform=$BUILDARCH
+FROM ruby:3.1.2
+ENV RAILS_ENV=production
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
@@ -14,15 +12,13 @@ RUN mkdir -p /app
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler && bundle install --jobs=4 --retry=3
+RUN gem install bundler:2.3.15 && bundle install --jobs=4 --retry=3
 
 COPY package.json ./
-RUN yarn install --no-lockfile --non-interactive
+RUN yarn install --no-lockfile --non-interactive && yarn cache clean
 
 COPY . ./
-RUN chmod +x ./scripts/install.sh
-RUN ./scripts/install.sh
+RUN rails assets:precompile
 
-EXPOSE 3000
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
