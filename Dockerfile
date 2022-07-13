@@ -1,6 +1,5 @@
 FROM ruby:3.1.2
 ENV RAILS_ENV=production
-ENV NODE_ENV=production
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
@@ -22,4 +21,4 @@ COPY . ./
 
 EXPOSE 3000
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
