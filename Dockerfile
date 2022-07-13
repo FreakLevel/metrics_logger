@@ -18,6 +18,7 @@ COPY package.json ./
 RUN yarn install --no-lockfile --non-interactive && yarn cache clean
 
 COPY . ./
+RUN rails assets:precompile
 
 EXPOSE 3000
 ENTRYPOINT ["./entrypoint.sh"]
