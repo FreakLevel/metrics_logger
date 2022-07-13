@@ -20,6 +20,5 @@ RUN yarn install --no-lockfile --non-interactive && yarn cache clean
 COPY . ./
 RUN rails assets:precompile
 
-EXPOSE 3000
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
