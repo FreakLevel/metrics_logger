@@ -300,3 +300,6 @@ Style/SingleArgumentDig:
 
 Style/StringConcatenation:
   Enabled: true
+
+Style/NumericLiterals:
+  Enabled: false
